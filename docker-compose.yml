@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: Dockerfile
+    volumes:
+      - ./:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+      - "3333:3333"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://todoapp@postgres/todos
+  postgres:
+    image: postgres:9.6.2-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
